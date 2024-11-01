@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bootstrap import Bootstrap
 import mysql.connector
 
-app = Flask('_name_')
+app = Flask(__name__)  # Corrected __name__
 app.secret_key = 'temporary_key'
 Bootstrap(app)  # Initialize Flask-Bootstrap
 
@@ -14,7 +14,6 @@ def get_db_connection():
         user='admin',
         password='ARUNKARTHIC',
         database='NM2024TMID13862_DB'
-
     )
 
 # Home Route
@@ -73,11 +72,9 @@ def login():
 # Dashboard Route
 @app.route('/dashboard')
 def dashboard():
-    # Example URLs for course material from S3
     course_urls = [
         'https://nm2024tmid13862bucket.s3.us-east-1.amazonaws.com/Introduction+to+machine+learning.pdf',
         'https://nm2024tmid13862bucket.s3.us-east-1.amazonaws.com/Python_program.pdf'
-
     ]
     return render_template('dashboard.html', course_urls=course_urls)
 
@@ -88,5 +85,5 @@ def logout():
     return redirect(url_for('login'))
 
 # Run the Flask app
-if _name_ == '_main_':
+if __name__ == '__main__':  # Corrected __main__
     app.run(debug=True)
