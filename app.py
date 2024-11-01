@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bootstrap import Bootstrap
 import mysql.connector
 
-app = Flask(_name_)
+app = Flask('_name_')
 app.secret_key = 'temporary_key'
 Bootstrap(app)  # Initialize Flask-Bootstrap
 
