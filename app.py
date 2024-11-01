@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bootstrap import Bootstrap
 import mysql.connector
 
-app = Flask(_name_)
+app = Flask(__name__)
 app.secret_key = 'temporary_key'
 Bootstrap(app)  # Initialize Flask-Bootstrap
 
@@ -12,7 +12,7 @@ def get_db_connection():
     return mysql.connector.connect(
         host='nm2024tmid13862-db.c5s6yoem87dv.us-east-1.rds.amazonaws.com',
         user='admin',
-        password='ARUNKARTHIC',
+        password='Sasi1618',
         database='NM2024TMID13862_DB'
 
     )
@@ -88,5 +88,5 @@ def logout():
     return redirect(url_for('login'))
 
 # Run the Flask app
-if _name_ == '_main_':
+if __name__ == '_main_':
     app.run(debug=True)
