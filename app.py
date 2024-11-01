@@ -1,8 +1,8 @@
-from flask import Flask, request, redirect, url_for, render_template 
+from flask import Flask, request, redirect, url_for, render_template
 from werkzeug.security import generate_password_hash, check_password_hash
 import mysql.connector
 
-app = Flask(__name__)
+app = Flask(_name_)
 app.secret_key = 'temporary_key'
 
 def get_db_connection():
@@ -22,7 +22,7 @@ def register():
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute(
-            'INSERT INTO users (username, password) VALUES (%s, %s)',
+            'INSERT INTO users (username, password_hash) VALUES (%s, %s)',
             (username, hashed_password)
         )
         conn.commit()
@@ -40,7 +40,7 @@ def login():
         password = request.form['password']
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('SELECT password FROM users WHERE username = %s', (username,))
+        cursor.execute('SELECT password_hash FROM users WHERE username = %s', (username,))
         result = cursor.fetchone()
         cursor.close()
         conn.close()
@@ -50,21 +50,38 @@ def login():
             return 'Invalid credentials', 401
     return render_template('login.html')
 
+
+# Dashboard Route (after login)
 @app.route('/dashboard')
 def dashboard():
     course_urls = [
-        'https://nm2024tmid13862bucket.s3.us-east-1.amazonaws.com/Introduction+to+machine+learning.pdf',
+       'https://nm2024tmid13862bucket.s3.us-east-1.amazonaws.com/Introduction+to+machine+learning.pdf',
         'https://nm2024tmid13862bucket.s3.us-east-1.amazonaws.com/Python_program.pdf'
+
     ]
+    
     return render_template('dashboard.html', course_urls=course_urls)
 
+# Home Route (Landing Page)
+
 @app.route('/')
+
 def home():
+
     return render_template('home.html')
 
+
+
+# Logout
+
 @app.route('/logout')
+
 def logout():
+
     return redirect(url_for('login'))
 
-if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000, debug=True)
+
+
+if _name_ == '_main_':
+
+    app.run(host="0.0.0.0", port=5000,debug=True)
